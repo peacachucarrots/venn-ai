@@ -1,0 +1,43 @@
+/* ====== Base layout & typography ======================================= */
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  color: #222;
+  background: #fff;
+}
+
+.survey-container {
+  max-width: 720px;
+  margin: 2.5rem auto;
+  padding: 0 1rem;
+}
+
+/* ====== Survey header ================================================== */
+.survey-name {
+  font-size: 1.75rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem;
+}
+
+.survey-description {
+  line-height: 1.55;
+  margin: 0 0 1.25rem;
+}
+
+/* ====== Dark-mode tweaks ============================================== */
+@media (prefers-color-scheme: dark) {
+  body {
+    background: #1b1d20;
+    color: #e9e9ea;
+  }
+  .option-item {
+    border-color: #3c3f44;
+  }
+  .option-item:hover {
+    background: #2a2d31;
+  }
+  .progress-bar::-webkit-progress-bar,
+  .progress-bar::-moz-progress-bar {
+    background-color: #3c3f44;
+  }
+}

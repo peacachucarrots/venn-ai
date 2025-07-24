@@ -1,0 +1,44 @@
+.results-container {
+  max-width: 640px;
+  margin: 2.5rem auto;
+  padding: 0 1rem;
+  text-align: center;
+}
+
+.results-title {
+  font-size: 1.75rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.results-focus {
+  font-size: 1.35rem;
+  font-weight: 500;
+  color: #3a60f4;
+  margin-bottom: 2rem;
+}
+
+.results-subtitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+}
+
+.results-followup {
+  font-size: 1.15rem;
+  line-height: 1.5;
+  color: #3a60f4;
+  margin-bottom: 1rem;
+}
+
+.results-raw {
+  background: #282c34;
+  color: #f3f3f3;
+  padding: 1rem;
+  border-radius: 6px;
+  overflow-x: auto;
+  font-size: 0.9rem;
+  line-height: 1.45;
+  margin: 0.5rem 0 1.25rem;
+}

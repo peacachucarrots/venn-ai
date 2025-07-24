@@ -1,0 +1,15 @@
+## LISTED IN ALPHABETICAL ORDER ##
+alembic>=1.16.4
+
+dotenv>=0.9.9
+
+flask>=3.1.1
+flask-migrate>=4.1.0
+flask-sqlalchemy>=3.1
+
+openai>=1.95.0
+
+psycopg[binary]>=3.2.9
+python-dotenv~=1.1.1
+
+SQLAlchemy~=2.0.41
