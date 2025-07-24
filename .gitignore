@@ -1,4 +1,18 @@
+# Python
+__pycache__/
+*.py[cod]
+
+# Flask
+instance/
 .env
 .flaskenv
+
+# Node
 node_modules/
+
+# Vite
 dist/
+
+# IDE
+.idea/
+.vscode/
