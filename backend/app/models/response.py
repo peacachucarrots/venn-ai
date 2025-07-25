@@ -16,7 +16,7 @@ class Response(db.Model):
         nullable=False
     )
 
-    body = db.Column(db.String())
+    analysis = db.Column(db.String())
     submitted_at = db.Column(db.DateTime)
 
     survey = db.relationship("Survey", back_populates="responses")

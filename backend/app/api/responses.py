@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request, abort
-import uuid
-
+from datetime import datetime, timezone
+import uuid, json
 from ..extensions import db
 from ..models.response import Response, Answer
 from ..services.analysis_service import analyze_response
@@ -32,14 +32,16 @@ def create_response():
         )
     db.session.commit()
 
-    analysis, prompt_json = analyze_response(resp)   # OpenAI call
+    analysis = analyze_response(resp)
     resp.analysis = analysis
+    resp.submitted_at = datetime.now(timezone.utc)
     db.session.commit()
+
+    parsed = json.loads(analysis)
 
     return jsonify({
         "response_id": str(resp.response_id),
-        "analysis": analysis,
-        "prompt_debug": prompt_json
+        "analysis": parsed
     })
 
 @bp.get("/<uuid:response_id>")
