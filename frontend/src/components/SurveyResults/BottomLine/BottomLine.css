@@ -1,0 +1,18 @@
+.bottom-line {
+  background: var(--card-bg);
+  padding: var(--spacing);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+}
+
+.bottom-line h2 {
+  margin-top: 0;
+  margin-bottom: var(--spacing-sm);
+  font-size: 1.25rem;
+  color: var(--accent);
+}
+
+.bottom-line p {
+  margin: 0.25rem 0;
+  color: var(--fg);
+}

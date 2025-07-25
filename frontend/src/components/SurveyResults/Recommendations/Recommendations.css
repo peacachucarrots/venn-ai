@@ -1,0 +1,29 @@
+.recs-blocks {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
+  gap: var(--spacing);
+}
+
+.rec-block {
+  background: var(--card-bg);
+  padding-left: var(--spacing);
+  padding-bottom: var(--spacing);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  margin-bottom: var(--spacing);
+}
+
+.rec-block h4 {
+  margin: 0 0 var(--spacing-sm);
+  font-size: 1rem;
+  color: var(--accent-light);
+}
+
+.rec-block ul {
+  margin: 0;
+  padding-left: 1.25rem;
+  color: var(--muted);
+}
+.rec-block li {
+  margin-bottom: 0.35rem;
+}

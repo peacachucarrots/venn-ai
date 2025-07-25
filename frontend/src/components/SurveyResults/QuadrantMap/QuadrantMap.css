@@ -1,0 +1,28 @@
+.quadrants {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--spacing);
+}
+
+.quadrant-block {
+  background: var(--card-bg);
+  padding: var(--spacing);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+}
+
+.quadrant-block h3 {
+  margin-top: 0;
+  margin-bottom: var(--spacing-sm);
+  font-size: 1rem;
+  color: var(--accent-light);
+}
+
+.quadrant-block ul {
+  margin: 0;
+  padding-left: 1.25rem;
+  color: var(--muted);
+}
+.quadrant-block li {
+  margin-bottom: 0.35rem;
+}

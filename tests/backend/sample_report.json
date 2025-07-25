@@ -1,0 +1,56 @@
+{
+  "scores": {
+    "Career/Achievement": 3.5,
+    "Love/Primary Relationship": 4.0,
+    "Health/Vitality": 2.5,
+    "Inner Peace/Purpose": 3.0,
+    "Money/Financial Confidence": 3.0,
+    "Friendship/Community": 3.5,
+    "Parenting/Family Legacy": 3.0,
+    "Sexuality/Intimacy": 1.0,
+    "Spirituality/Faith": 3.5,
+    "Creativity/Play": 3.5
+  },
+  "quadrants": {
+    "mirage": ["Sexuality/Intimacy"],
+    "swamp": ["Health/Vitality"],
+    "forge": ["Career/Achievement", "Inner Peace/Purpose", "Money/Financial Confidence", "Friendship/Community", "Parenting/Family Legacy", "Spirituality/Faith", "Creativity/Play"],
+    "radiant": ["Love/Primary Relationship"]
+  },
+  "dominant_pattern": {
+    "name": "The Conscious Builder in Transition",
+    "summary": "Most areas are in Forge—active growth—while a single Mirage hotspot indicates misalignment in intimacy."
+  },
+  "actions_this_week": [
+    "Schedule a 30-minute creativity session to reconnect with joy.",
+    "Have a candid check-in conversation with your partner about shared needs.",
+    "Book a health appointment (doctor/nutritionist/trainer) you've delayed."
+  ],
+  "hidden_patterns": [
+    {
+      "areas": ["Money/Financial Confidence", "Career/Achievement"],
+      "insight": "You're pushing career growth without consolidating financial habits, creating low-grade anxiety.",
+      "risk": "Burnout and reactive spending under pressure.",
+      "pathway": "Set up a weekly 'money ritual' to track, reflect, and reframe scarcity thoughts."
+    }
+  ],
+  "future_projections": {
+    "six_months": "Stabilized health and clearer purpose if you sustain current Forge momentum.",
+    "twelve_months": "A shift toward Radiant in 2–3 domains, provided intimacy and money patterns resolve."
+  },
+  "strategic_recommendations": {
+    "immediate": ["Address the Mirage domain first to stop energy leaks."],
+    "forge_focus": ["Commit to consistent habits in Health/Vitality and Purpose."],
+    "leverage": ["Use your Radiant relationship to support change elsewhere."],
+    "transformation": ["Reframe sexuality from performance to presence; consider guided therapy."]
+  },
+  "bottom_line": {
+    "summary_scores": {
+      "mirage": 1,
+      "swamp": 1,
+      "forge": 7,
+      "radiant": 1
+    },
+    "next_30_days_focus": "Stabilize intimacy and health routines while leveraging your relationship support."
+  }
+}

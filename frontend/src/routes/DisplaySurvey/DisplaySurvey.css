@@ -1,4 +1,4 @@
-/* ====== Base layout & typography ======================================= */
+/* Base layout & typography */
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   margin: 0;
@@ -12,7 +12,7 @@ body {
   padding: 0 1rem;
 }
 
-/* ====== Survey header ================================================== */
+/* Survey header */
 .survey-name {
   font-size: 1.75rem;
   font-weight: 600;
@@ -24,7 +24,7 @@ body {
   margin: 0 0 1.25rem;
 }
 
-/* ====== Dark-mode tweaks ============================================== */
+/* Dark-mode tweaks */
 @media (prefers-color-scheme: dark) {
   body {
     background: #1b1d20;

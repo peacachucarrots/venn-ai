@@ -1,0 +1,22 @@
+.pattern-card {
+  background: var(--card-bg);
+  padding: var(--spacing);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  margin-bottom: var(--spacing);
+}
+
+.pattern-card h3 {
+  margin: 0 0 var(--spacing-sm);
+  font-size: 1.1rem;
+  color: var(--accent-light);
+}
+
+.pattern-card p {
+  margin: 0 0 0.5rem;
+  color: var(--fg);
+}
+
+.pattern-card strong {
+  color: var(--accent-light);
+}

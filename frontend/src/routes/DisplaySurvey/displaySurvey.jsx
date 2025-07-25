@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from "react-router-dom";
 
-import ProgressBar from '@/components/ProgressBar/progressBar.jsx'
+import ProgressBar from '@/components/Survey/ProgressBar/progressBar.jsx'
 import { LoadingWithText } from '@/components/Loading/index.jsx'
-import MCQuestion from '@/components/QuestionType/MCQuestion/MCQuestion.jsx'
-import MatrixQuestion from '@/components/QuestionType/MatrixQuestion/MatrixQuestion.jsx'
+import MCQuestion from '@/components/Survey/MCQuestion/MCQuestion.jsx'
+import MatrixQuestion from '@/components/Survey/MatrixQuestion/MatrixQuestion.jsx'
 import './DisplaySurvey.css';
 
 export default function DisplaySurvey({ surveyId: propSurveyId }) {

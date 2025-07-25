@@ -1,0 +1,12 @@
+.action-list {
+  background: var(--card-bg);
+  padding: var(--spacing);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  list-style: disc;
+  padding-left: 2rem;
+  color: var(--fg);
+}
+.action-list li {
+  margin-bottom: 0.4rem;
+}

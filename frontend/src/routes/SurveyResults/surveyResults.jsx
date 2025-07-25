@@ -2,63 +2,85 @@ import { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import "./SurveyResults.css";
 
+import RadarScores from "@/components/SurveyResults/RadarScores/RadarScores.jsx";
+import QuadrantMap from "@/components/SurveyResults/QuadrantMap/QuadrantMap.jsx";
+import PatternCard from "@/components/SurveyResults/PatternCard/PatternCard.jsx";
+import ActionList from "@/components/SurveyResults/ActionList/ActionList.jsx";
+import Projections from "@/components/SurveyResults/Projections/Projections.jsx";
+import Recommendations from "@/components/SurveyResults/Recommendations/Recommendations.jsx";
+import BottomLine from "@/components/SurveyResults/BottomLine/BottomLine.jsx";
+import { LoadingWithText } from "@/components/Loading";
+
 export default function SurveyResults() {
     const { state } = useLocation();
     const { rid } = useParams();
 
-    const [analysis, setAnalysis] = useState(state?.analysis || null);
+    const [report, setReport] = useState(state?.analysis || null);
     const [promptDebug, setPromptDebug] = useState(state?.promptDebug || null);
 
     useEffect(() => {
-        if (analysis) return;
+        if (report || !rid) return;
         fetch(`/api/responses/${rid}`)
             .then((r) => r.json())
             .then((json) => {
-                setAnalysis(json.analysis);
+                setReport(json.analysis);
                 setPromptDebug(json.prompt_debug);
             })
             .catch(console.error);
-    }, [rid, analysis]);
+    }, [rid, report]);
 
-    if (!analysis) return <p>Loading results...</p>;
-
-    let parsed = null;
-    try {
-        parsed = JSON.parse(analysis);
-    } catch {
-        /* fallback UI */
-    }
+    if (!report) return <LoadingWithText text="Loading results..." />;
 
     return (
-        <div>
-            <div className="results-container">
-                {parsed ? (
-                    <>
-                        <h2 className="results-title">Your Focus Area</h2>
-                        <p className="results-focus">{parsed.focus_area}</p>
+        <div className="results-page">
+            <h1 className="results-heading">Your Venn Diagnostic Report</h1>
 
-                        <h3 className="results-subtitle">Recommended next step</h3>
-                        <p className="results-followup">{parsed.followup_survey}</p>
-                    </>
-                ) : (
-                    <>
-                        <p>
-                            <em>Couldn't parse JDON response.</em>
-                        </p>
-                        <pre className="results-raw">{analysis}</pre>
-                    </>
-                )}
-            </div>
+            <RadarScores scores={report.scores} size={720} />
+            <QuadrantMap quadrants={report.quadrants} />
 
-            {/* DEV-only prompt dump */}
-            {promptDebug && (
-                <>
-                    <h3 className="results-subtitle">
-                        Prompt sent to OpenAI (dev)
-                    </h3>
-                    <pre className="results-raw">{promptDebug}</pre>
-                </>
-            )}
+            <section>
+                <h2>Dominant Pattern</h2>
+                <PatternCard
+                    title={report.dominant_pattern.name}
+                    summary={report.dominant_pattern.summary}
+                />
+            </section>
+
+            <section>
+                <h2>This Week's Actions</h2>
+                <ActionList items={report.actions_this_week} />
+            </section>
+
+            <section>
+                <h2>Hidden Patterns</h2>
+                {report.hidden_patterns.map((p, index) => (
+                    <PatternCard
+                        key={index}
+                        areas={p.areas}
+                        insight={p.insight}
+                        risk={p.risk}
+                        pathway={p.pathway}
+                    />
+                ))}
+            </section>
+
+            <section>
+                <h2>Future Projections</h2>
+                <Projections projections={report.future_projections} />
+            </section>
+
+            <section>
+                <h2>Strategic Recommendations</h2>
+                <Recommendations data={report.strategic_recommendations} />
+            </section>
+
+            <section>
+                <h2>Bottom Line</h2>
+                <BottomLine
+                scores={report.bottom_line.summary_scores}
+                focus={report.bottom_line.next_30_days_focus}
+                />
+            </section>
         </div>
     );
 }

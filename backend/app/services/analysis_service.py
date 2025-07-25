@@ -1,8 +1,8 @@
 # app/services/analysis_service.py
-import os, openai
+import os, openai, json
 
 from .helpers.analysis_helper import describe_option
-from .helpers.prompts import system_prompt, user_prompt
+from .helpers.prompts import SYSTEM_PROMPT, USER_PROMPT, JSON_SCHEMA
 from ..models.response import Response
 
 client = openai.OpenAI(api_key=os.environ["OPENAI_API_KEY"])
@@ -15,15 +15,16 @@ def analyze_response(resp: Response):
         for ans in resp.answers
     ]
 
-    system_content = system_prompt
-    user_content = "\n".join([user_prompt, *bullets])
+    combined_user_content = "\n".join([USER_PROMPT, *bullets])
 
-    completion = client.chat.completions.create(
+    resp = client.chat.completions.create(
         model="o3",
-        response_format={"type": "json_object"},
+        response_format={"type": "json_schema", "json_schema": JSON_SCHEMA},
         messages=[
-            {"role": "system", "content": system_content},
-            {"role": "user", "content": user_content},
+            {"role": "system", "content": SYSTEM_PROMPT},
+            {"role": "user", "content": combined_user_content},
         ]
     )
-    return completion.choices[0].message.content, user_content
+
+    json_text = resp.choices[0].message.content
+    return json.loads(json_text), combined_user_content

@@ -1,0 +1,7 @@
+.projections {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding-left: var(--spacing);
+  margin-bottom: var(--spacing-lg);
+}

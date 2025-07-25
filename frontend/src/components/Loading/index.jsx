@@ -1,10 +1,10 @@
 import "./Loading.css"
 
-export default function Loading({ size = 40 }) {
+export default function Loading({ size = 50 }) {
     return <div className="spinner" style={{ width: size, height: size }} />;
 }
 
-export function LoadingWithText({ text = "Loading...", size = 40 }) {
+export function LoadingWithText({ text = "Loading...", size = 50 }) {
     return (
         <div className="loading-container">
             <div className="spinner" style={{ width: size, height: size }} />
