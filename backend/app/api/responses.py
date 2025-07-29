@@ -3,6 +3,8 @@ from datetime import datetime, timezone
 import uuid, json
 from ..extensions import db
 from ..models.response import Response, Answer
+from ..models.survey import Question, QuestionType
+from ..models.visitor import Visitor
 from ..services.analysis_service import analyze_response
 
 bp = Blueprint('responses', __name__, url_prefix='/api/responses')
@@ -23,13 +25,24 @@ def create_response():
     db.session.flush()
 
     for a in data["answers"]:
-        db.session.add(
-            Answer(
-                response_id=resp.response_id,
-                question_id=a["question_id"],
-                option_id=a["option_id"],
+        q = Question.query.get(a["question_id"])
+        if q.question_type == QuestionType.contact:
+            contact = a["answer"]
+            visitor = Visitor.query.get(visitor_id) or Visitor(visitor_id=visitor_id)
+            visitor.first_name = contact.get("first_name")
+            visitor.last_name = contact.get("last_name")
+            visitor.email = contact.get("email")
+            visitor.phone = contact.get("phone_number")
+            visitor.company = contact.get("company")
+            db.session.add(visitor)
+        else:
+            db.session.add(
+                Answer(
+                    response_id=resp.response_id,
+                    question_id=a["question_id"],
+                    option_id=a["option_id"],
+                )
             )
-        )
     db.session.commit()
 
     analysis = analyze_response(resp)

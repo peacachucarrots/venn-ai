@@ -16,16 +16,12 @@ export default function SurveyResults() {
     const { rid } = useParams();
 
     const [report, setReport] = useState(state?.analysis || null);
-    const [promptDebug, setPromptDebug] = useState(state?.promptDebug || null);
 
     useEffect(() => {
         if (report || !rid) return;
         fetch(`/api/responses/${rid}`)
             .then((r) => r.json())
-            .then((json) => {
-                setReport(json.analysis);
-                setPromptDebug(json.prompt_debug);
-            })
+            .then((json) => { setReport(json.analysis); })
             .catch(console.error);
     }, [rid, report]);
 

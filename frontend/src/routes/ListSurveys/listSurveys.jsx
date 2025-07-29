@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
 
+import "./listSurveys.css";
+import LoadingWithText from "@/components/Loading/index.jsx";
+
 export default function ListSurveys() {
     const [list, setList] = useState([]);
 
@@ -11,7 +14,7 @@ export default function ListSurveys() {
             .catch(console.error);
     }, []);
 
-    if (!list.length) return <p>Loading survey list...</p>;
+    if (!list.length) return <LoadingWithText text="Loading Survey List..." />;
 
     return (
         <div className="list-surveys">

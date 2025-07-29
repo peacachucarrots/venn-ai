@@ -1,6 +1,8 @@
 ## LISTED IN ALPHABETICAL ORDER ##
 alembic>=1.16.4
 
+click~=8.2.1
+
 dotenv>=0.9.9
 
 flask>=3.1.1
@@ -11,5 +13,7 @@ openai>=1.95.0
 
 psycopg[binary]>=3.2.9
 python-dotenv~=1.1.1
+
+requests~=2.32.4
 
 SQLAlchemy~=2.0.41

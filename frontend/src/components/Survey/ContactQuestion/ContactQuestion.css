@@ -1,0 +1,26 @@
+.contact-field {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: var(--spacing);
+  display: grid;
+  gap: var(--spacing-sm);
+}
+
+.contact-label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.contact-input {
+  width: 100%;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 1rem;
+}
+
+.contact-next {
+  justify-self: end;
+}

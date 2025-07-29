@@ -5,6 +5,7 @@ import ProgressBar from '@/components/Survey/ProgressBar/progressBar.jsx'
 import { LoadingWithText } from '@/components/Loading/index.jsx'
 import MCQuestion from '@/components/Survey/MCQuestion/MCQuestion.jsx'
 import MatrixQuestion from '@/components/Survey/MatrixQuestion/MatrixQuestion.jsx'
+import ContactQuestion from '@/components/Survey/ContactQuestion/ContactQuestion.jsx'
 import './DisplaySurvey.css';
 
 export default function DisplaySurvey({ surveyId: propSurveyId }) {
@@ -15,7 +16,6 @@ export default function DisplaySurvey({ surveyId: propSurveyId }) {
     const [questionIndex, setQuestionIndex] = useState(0);
     const [answers, setAnswers] = useState({});
     const [analysis, setAnalysis] = useState(null);
-    const [promptDebug, setPromptDebug] = useState(null);
     const [submitted, setSubmitted] = useState(false);
 
     useEffect(() => {
@@ -36,22 +36,22 @@ export default function DisplaySurvey({ surveyId: propSurveyId }) {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-                answers: Object.entries(answers).map(([q, o]) => ({
-                    question_id: q,
-                    option_id: o,
-                }))
+                answers: Object.entries(answers).map(([qid, val]) => (
+                    val?.text
+                    ? { question_id: qid, text: val.text }
+                    : { question_id: qid, option_id: val }
+                ))
             })
         })
             .then(r => r.json())
             .then(json => {
                 setAnalysis(json.analysis);
-                setPromptDebug(json.prompt_debug);
                 navigate(`/results/${json.response_id}`, {
-                    state: { analysis: json.analysis, promptDebug: json.prompt_debug }
+                    state: { analysis: json.analysis }
                 });
             })
             .catch(console.error);
-    }, [survey, questionIndex, submitted, answers, navigate, analysis, promptDebug]);
+    }, [survey, questionIndex, submitted, answers, navigate, analysis]);
 
     if (!survey)
         return <LoadingWithText text="Loading survey..." size={50} />;
@@ -73,9 +73,16 @@ export default function DisplaySurvey({ surveyId: propSurveyId }) {
     }
 
     const q = survey.questions[questionIndex];
+    // matrix question
     const matrixRows = survey.questions.filter(q => q.question_type === "matrix");
     const importanceOptions = matrixRows[0]?.options || [];
     const isMatrixQuestion = q.question_type === "matrix";
+    // contact question
+    const val = answers[q.question_id] ?? "";
+    const isContactQuestion = q.question_type === "contact";
+    function handleContactChange(questionId, text) {
+        setAnswers(prev => ({ ...prev, [questionId]: { text } }));
+    }
 
     return (
         <div className="survey-container">
@@ -86,7 +93,14 @@ export default function DisplaySurvey({ surveyId: propSurveyId }) {
                 maxValue={survey.questions.length}
             />
 
-            {isMatrixQuestion ? (
+            {isContactQuestion ? (
+                <ContactQuestion
+                    question={q}
+                    value={val}
+                    onChangeText={handleContactChange}
+                    onNext={() => setQuestionIndex(i => i + 1)}
+                />
+            ) : isMatrixQuestion ? (
                 <MatrixQuestion
                     question={q}
                     rows={matrixRows}

@@ -20,9 +20,9 @@ class Survey(db.Model):
     )
 
 class QuestionType(enum.Enum):
-    mcq      = "mcq"
-    matrix   = "matrix"
-    contact  = "contact"
+    mcq       = "mcq"
+    matrix    = "matrix"
+    contact   = "contact"
 
 class Question(db.Model):
     __tablename__  = "questions"
