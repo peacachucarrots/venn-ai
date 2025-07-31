@@ -13,10 +13,8 @@ def import_typeform_form(form_id: str, commit: bool = True, force: bool = False)
     Import or re‑import a Typeform survey.
     Returns the survey_id (not the version id) that was affected.
     """
-    form = fetch_json(form_id)
-    schema_hash = _hash_schema(form)
-
     # check if survey already exists in DB
+    form = fetch_json(form_id)
     survey = Survey.query.filter_by(typeform_id=form_id).first()
     if not survey:
         survey = Survey(
@@ -38,6 +36,7 @@ def import_typeform_form(form_id: str, commit: bool = True, force: bool = False)
         .first()
     )
 
+    schema_hash = _hash_schema(form)
     if not force and latest and latest.schema_hash == schema_hash:
         click.echo("Schema already in DB; no changes detected.")
         return survey.survey_id
