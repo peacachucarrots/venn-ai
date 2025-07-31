@@ -57,6 +57,12 @@ export default function DisplaySurvey({ surveyId: propSurveyId }) {
         return out;
     }, [survey]);
 
+    const qById = useMemo(() => {
+        const map = new Map();
+        survey?.questions.forEach(q => map.set(q.question_id, q));
+        return map;
+    }, [survey]);
+
     useEffect(() => {
         if (!survey || submitted || pageIndex < pages.length) return;
         setSubmitted(true);
@@ -67,11 +73,14 @@ export default function DisplaySurvey({ surveyId: propSurveyId }) {
             credentials: "include",
             body: JSON.stringify({
                 survey_version_id: versionId,
-                answers: Object.entries(answers).map(([qid, val]) => (
-                    typeof val === "object"
-                    ? { question_id: qid, text: val.text }
-                    : { question_id: qid, option_id: val }
-                ))
+                answers: Object.entries(answers).map(([qid, val]) => {
+                    const q = qById.get(qid);
+
+                    if (q.question_type === "contact") {
+                        return { question_id: qid, text: val };
+                    }
+                    return { question_id: qid, option_id: val };
+                })
             })
         })
             .then(r => r.json())
