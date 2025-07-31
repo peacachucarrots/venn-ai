@@ -16,8 +16,9 @@ class OptionSet(db.Model):
     )
     questions = db.relationship(
         "Question",
-        back_populates="shared_set",
-        cascade="all, delete-orphan"
+        back_populates="option_set",
+        cascade="all, delete-orphan",
+        lazy="selectin"
     )
 
 class QuestionOption(db.Model):

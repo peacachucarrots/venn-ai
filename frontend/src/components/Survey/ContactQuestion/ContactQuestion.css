@@ -4,6 +4,8 @@
   border-radius: var(--radius);
   padding: var(--spacing);
   display: grid;
+  grid-template-columns: 1fr;
+  box-sizing: border-box;
   gap: var(--spacing-sm);
 }
 
@@ -15,12 +17,15 @@
 
 .contact-input {
   width: 100%;
+  max-width: 100%;
   padding: 0.6rem 0.8rem;
   border: 1px solid var(--border);
   border-radius: var(--radius);
   font-size: 1rem;
+  box-sizing: border-box;
 }
 
 .contact-next {
   justify-self: end;
+  margin-top: var(--spacing-sm);
 }

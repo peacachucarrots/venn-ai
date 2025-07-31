@@ -5,9 +5,9 @@ class Response(db.Model):
     __tablename__ = "responses"
 
     response_id = db.Column(db.UUID, primary_key=True, default=uuid.uuid4)
-    survey_id = db.Column(
+    survey_version_id = db.Column(
         db.UUID,
-        db.ForeignKey("surveys.survey_id"),
+        db.ForeignKey("survey_versions.survey_version_id", ondelete="CASCADE"),
         nullable=False
     )
     visitor_id = db.Column(
@@ -19,7 +19,7 @@ class Response(db.Model):
     analysis = db.Column(db.String())
     submitted_at = db.Column(db.DateTime)
 
-    survey = db.relationship("Survey", back_populates="responses")
+    version = db.relationship("SurveyVersion", back_populates="responses")
     visitor = db.relationship("Visitor", back_populates="responses")
     answers = db.relationship(
         "Answer",

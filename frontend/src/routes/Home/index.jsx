@@ -1,9 +1,20 @@
+import { useEffect, useState } from "react";
+
+import useVisitorCookie from "@/hooks/useVisitorCookie.jsx";
 import DisplaySurvey from "../DisplaySurvey/DisplaySurvey.jsx";
 import "./Home.css";
 
-const WELCOME_SURVEY_ID = "810056b0-b8ad-4f6e-ac45-4ba3f864aa2b"
-
 export default function Home() {
+    useVisitorCookie();
+
+    const [welcomeSurveyId, setWelcomeSurveyId] = useState(null);
+    useEffect(() => {
+        fetch(`/api/surveys/welcome`)
+            .then(r => r.json())
+            .then(data => setWelcomeSurveyId(data))
+            .catch(console.error)
+    }, []);
+
     return (
         <>
             <div className="intro-container">
@@ -12,7 +23,7 @@ export default function Home() {
                     We're here to listen.
                 </h1>
             </div>
-            <DisplaySurvey surveyId={WELCOME_SURVEY_ID} />
+            <DisplaySurvey surveyId={welcomeSurveyId} />
         </>
     );
 }

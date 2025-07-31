@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { useNavigate, useParams } from "react-router-dom";
 
 import ProgressBar from '@/components/Survey/ProgressBar/progressBar.jsx'
@@ -12,32 +12,63 @@ export default function DisplaySurvey({ surveyId: propSurveyId }) {
     const { id: routeSurveyId } = useParams();
     const surveyId = propSurveyId || routeSurveyId;
     const navigate = useNavigate();
+
     const [survey, setSurvey] = useState(null);
-    const [questionIndex, setQuestionIndex] = useState(0);
+    const [versionId, setVersionId] = useState(null);
+    const [pageIndex, setPageIndex] = useState(0);
     const [answers, setAnswers] = useState({});
-    const [analysis, setAnalysis] = useState(null);
     const [submitted, setSubmitted] = useState(false);
 
     useEffect(() => {
         if (!surveyId) return;
-        fetch(`/api/surveys/${surveyId}`)
+        fetch(`/api/surveys/${surveyId}`, {
+            credentials: "include"
+        })
             .then(r => r.json())
-            .then(setSurvey)
+            .then(data => {
+                setSurvey(data);
+                setVersionId(data.survey_version_id);
+            })
             .catch(console.error);
     }, [surveyId]);
 
-    useEffect(() => {
-        if (!survey) return;
-        const finished = questionIndex >= survey.questions.length;
-        if (!finished || submitted) return;
+    const pages = useMemo(() => {
+        if (!survey) return [];
 
+        const out = [];
+        let contactBuf = [];
+
+        const flush = () => {
+            if (contactBuf.length) {
+                out.push({ type: "contact", questions: contactBuf });
+                contactBuf = [];
+            }
+        };
+
+        survey.questions.forEach(q => {
+            if (q.question_type === "contact") {
+                contactBuf.push(q);
+            } else {
+                flush();
+                out.push({ type: q.question_type, question: q });
+            }
+        });
+        flush();
+        return out;
+    }, [survey]);
+
+    useEffect(() => {
+        if (!survey || submitted || pageIndex < pages.length) return;
         setSubmitted(true);
+
         fetch("/api/responses/create-response", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
+            credentials: "include",
             body: JSON.stringify({
+                survey_version_id: versionId,
                 answers: Object.entries(answers).map(([qid, val]) => (
-                    val?.text
+                    typeof val === "object"
                     ? { question_id: qid, text: val.text }
                     : { question_id: qid, option_id: val }
                 ))
@@ -45,77 +76,65 @@ export default function DisplaySurvey({ surveyId: propSurveyId }) {
         })
             .then(r => r.json())
             .then(json => {
-                setAnalysis(json.analysis);
                 navigate(`/results/${json.response_id}`, {
                     state: { analysis: json.analysis }
                 });
             })
             .catch(console.error);
-    }, [survey, questionIndex, submitted, answers, navigate, analysis]);
+    }, [survey, submitted, pageIndex, pages.length, versionId, answers, navigate]);
 
     if (!survey)
         return <LoadingWithText text="Loading survey..." size={50} />;
 
-    if (questionIndex >= survey.questions.length)
+    if (pageIndex >= pages.length)
         return <LoadingWithText text="Analyzing answers..." size={50} />;
 
-    function handleMCQSelect(questionId, optionId) {
-        setAnswers((prev) => ({ ...prev, [questionId]: optionId }));
-        setQuestionIndex(i => i + 1);
-    }
+    const nextQuestion = () => setPageIndex(i => i + 1);
+    const setAns = (qid, val) => setAnswers(a => ({ ...a, [qid]: val }));
 
-    function handleMatrixSelect(questionId, optionId) {
-        const firstTime = !Object.prototype.hasOwnProperty.call(answers, questionId);
-        setAnswers(prev => ({ ...prev, [questionId]: optionId }));
-        if (firstTime) {
-            setQuestionIndex(i => i + 1);
-        }
-    }
-
-    const q = survey.questions[questionIndex];
-    // matrix question
-    const matrixRows = survey.questions.filter(q => q.question_type === "matrix");
-    const importanceOptions = matrixRows[0]?.options || [];
-    const isMatrixQuestion = q.question_type === "matrix";
-    // contact question
-    const val = answers[q.question_id] ?? "";
-    const isContactQuestion = q.question_type === "contact";
-    function handleContactChange(questionId, text) {
-        setAnswers(prev => ({ ...prev, [questionId]: { text } }));
-    }
+    const page = pages[pageIndex];
 
     return (
         <div className="survey-container">
             <h1 className="survey-name">Welcome to the {survey.name} Survey.</h1>
             <p className="survey-description">{survey.description}</p>
             <ProgressBar
-                currentValue={questionIndex}
-                maxValue={survey.questions.length}
+                currentValue={pageIndex}
+                maxValue={pages.length}
             />
 
-            {isContactQuestion ? (
-                <ContactQuestion
-                    question={q}
-                    value={val}
-                    onChangeText={handleContactChange}
-                    onNext={() => setQuestionIndex(i => i + 1)}
-                />
-            ) : isMatrixQuestion ? (
-                <MatrixQuestion
-                    question={q}
-                    rows={matrixRows}
-                    options={importanceOptions}
-                    answers={answers}
-                    onChange={handleMatrixSelect}
-                />
-            ) : (
+            {page.type === "mcq" && (
                 <MCQuestion
-                    question={q}
-                    options={q.options}
-                    selectedOption={answers[q.question_id]}
-                    onSelect={(opt) =>
-                        handleMCQSelect(q.question_id, opt.option_id)
-                    }
+                    question={page.question}
+                    options={page.question.options}
+                    selectedOption={answers[page.question.question_id]}
+                    onSelect={(opt) => {
+                        setAns(page.question.question_id, opt.option_id);
+                        nextQuestion();
+                    }}
+                />
+            )}
+
+            {page.type === "matrix" && (
+                <MatrixQuestion
+                    question={page.question}
+                    rows={survey.questions.filter(q => q.question_type === "matrix")}
+                    options={page.question.options}
+                    answers={answers}
+                    onChange={(qid, oid) => {
+                        const first = !answers[qid];
+                        setAns(qid, oid);
+                        if (first) nextQuestion();
+                    }}
+                />
+            )}
+
+            {page.type === "contact" && (
+                <ContactQuestion
+                    questions={page.questions}
+                    answers={answers}
+                    onChangeText={(qid, txt) => setAns(qid, txt)}
+                    onNext={nextQuestion}
                 />
             )}
         </div>

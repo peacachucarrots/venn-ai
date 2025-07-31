@@ -8,8 +8,11 @@ from ..models.response import Response
 
 client = openai.OpenAI(api_key=os.environ["OPENAI_API_KEY"])
 
-def analyze_response(resp: Response):
-    """Build a prompt, call OpenAI, return the assistant’s JSON string."""
+def analyze_response(resp: Response) -> str:
+    """
+    Build a prompt consisting of user answers, call OpenAI,
+    and return the assistant’s response string.
+    """
     # bullet-format each answer
     bullets = [
         f"- {ans.question.prompt}: {describe_option(ans.option, ans.question)}"
