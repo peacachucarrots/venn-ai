@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import useApi from "@/hooks/useApi.js";
-import {LoadingWithText} from "@/components/Loading/Loading.jsx";
+import { LoadingWithText } from "@/components/Loading/Loading.jsx";
+import useSurveyResponses from "@/hooks/useSurveyResponses.js";
 import "./Analytics.css";
 
 export default function Analytics() {
