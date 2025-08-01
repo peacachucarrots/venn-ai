@@ -1,4 +1,4 @@
-w# Introduction
+# Introduction
 Hello! Welcome to VennAI, a survey web application designed to identify critical aspects of your life and provide you
 with focused insight on the areas of life you value the most.
 
