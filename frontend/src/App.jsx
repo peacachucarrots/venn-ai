@@ -1,18 +1,33 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home           from "./routes/Home/index.jsx";
-import DisplaySurvey  from "./routes/DisplaySurvey/DisplaySurvey.jsx";
-import SurveyResults  from "./routes/SurveyResults/surveyResults.jsx";
+import { AuthTokenProvider } from "@/hooks/useAuthToken.jsx";
+
+import Navbar         from "@/layout/Navbar/Navbar.jsx";
+import Footer         from "@/layout/Footer/Footer.jsx";
+import Home           from "@/routes/Home/index.jsx";
+import RequireAuth    from "@/routes/RequireAuth.jsx";
+import Analytics      from "@/routes/Analytics/Analytics.jsx";
+import ListSurveys    from "@/routes/ListSurveys/listSurveys.jsx"
+import DisplaySurvey  from "@/routes/DisplaySurvey/DisplaySurvey.jsx";
+import SurveyResults  from "@/routes/SurveyResults/surveyResults.jsx";
 
 function App() {
     return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/"               element={<Home />} />
-        <Route path="/survey/:id"     element={<DisplaySurvey />} />
-        <Route path="/results/:rid"   element={<SurveyResults />} />
-      </Routes>
-    </BrowserRouter>
-  );
+        <AuthTokenProvider>
+            <BrowserRouter>
+                <Navbar />
+
+                <Routes>
+                    <Route path="/"               element={<Home />} />
+                    <Route path="/analytics"      element={<RequireAuth><Analytics /></RequireAuth>} />
+                    <Route path="/surveys"        element={<ListSurveys />} />
+                    <Route path="/survey/:id"     element={<DisplaySurvey />} />
+                    <Route path="/results/:rid"   element={<SurveyResults />} />
+                </Routes>
+
+                <Footer />
+            </BrowserRouter>
+        </AuthTokenProvider>
+    );
 }
 
 export default App;

@@ -9,7 +9,7 @@ import ActionList from "@/components/SurveyResults/ActionList/ActionList.jsx";
 import Projections from "@/components/SurveyResults/Projections/Projections.jsx";
 import Recommendations from "@/components/SurveyResults/Recommendations/Recommendations.jsx";
 import BottomLine from "@/components/SurveyResults/BottomLine/BottomLine.jsx";
-import { LoadingWithText } from "@/components/Loading";
+import { LoadingWithText } from "@/components/Loading/Loading.jsx";
 
 export default function SurveyResults() {
     const { state } = useLocation();

@@ -14,9 +14,7 @@ def _hash_schema(form_json: dict) -> str:
     return hashlib.sha1(json.dumps(sig, sort_keys=True).encode()).hexdigest()
 
 def fetch_json(form_id: str) -> dict:
-    """
-    Returns typeform survey in json format
-    """
+    """Returns typeform survey in json format"""
     res = requests.get(
         f"https://api.typeform.com/forms/{form_id}",
         headers={"Authorization": f"Bearer {os.environ['TYPEFORM_TOKEN']}"},

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
 
 import "./listSurveys.css";
-import LoadingWithText from "@/components/Loading/index.jsx";
+import LoadingWithText from "@/components/Loading/Loading.jsx";
 
 export default function ListSurveys() {
     const [list, setList] = useState([]);

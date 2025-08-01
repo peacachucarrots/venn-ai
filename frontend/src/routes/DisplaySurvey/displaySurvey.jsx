@@ -2,7 +2,7 @@ import { useEffect, useState, useMemo } from 'react';
 import { useNavigate, useParams } from "react-router-dom";
 
 import ProgressBar from '@/components/Survey/ProgressBar/progressBar.jsx'
-import { LoadingWithText } from '@/components/Loading/index.jsx'
+import { LoadingWithText } from '@/components/Loading/Loading.jsx'
 import MCQuestion from '@/components/Survey/MCQuestion/MCQuestion.jsx'
 import MatrixQuestion from '@/components/Survey/MatrixQuestion/MatrixQuestion.jsx'
 import ContactQuestion from '@/components/Survey/ContactQuestion/ContactQuestion.jsx'

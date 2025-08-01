@@ -2,16 +2,16 @@
 .progress {
     width: 100%;
     height: 10px;
-    background: #e4e7eb;
-    border-radius: 5px;
+    background: #2f3338;
+    border-radius: var(--radius);
     overflow: hidden;
 }
 
 /* fill bar */
 .progress__fill {
     height: 100%;
-    width: 0%;
-    background: linear-gradient(90deg, #4f8cf7, #3a60f4);
+    width: 0;
+    background: linear-gradient(90deg, var(--accent-light), var(--accent));
     transition: width 0.35s ease;
 }
 
@@ -21,6 +21,6 @@
         background: #2f3338;
     }
     .progress__fill {
-        background: linear-gradient(90deg, #5c9aff, #4674f0);
+        background: linear-gradient(90deg, var(--accent-light), var(--accent));
     }
 }

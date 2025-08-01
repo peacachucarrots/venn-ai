@@ -1,0 +1,55 @@
+.nav-container {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-lg);
+    padding: 0.75rem 1.5rem;
+    background-color: var(--bg);
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.nav-logo img {
+    height: 60px;
+    width: auto;
+    display: block;
+}
+
+.nav-container a {
+    text-decoration: none;
+    color: var(--accent);
+    font-weight: 500;
+    transition: color 0.15s ease;
+}
+
+.nav-container a:hover {
+    color: var(--accent-light);
+}
+
+.logout-btn,
+.nav-container > button {
+    margin-left: auto;
+    background: var(--accent);
+    border: none;
+    border-radius: var(--radius);
+    padding: var(--spacing-sm);
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: background 0.15s ease;
+}
+
+.logout-btn,
+.nav-container > button:hover {
+    background: var(--accent-light);
+}
+
+@media (max-width: 640px) {
+    .nav-container {
+        gap: var(--spacing-sm);
+        padding: 0.5rem 1rem;
+    }
+    .nav-logo img {
+        height: 40px;
+    }
+}
