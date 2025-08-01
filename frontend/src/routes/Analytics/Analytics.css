@@ -1,0 +1,59 @@
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: var(--spacing);
+    margin-bottom: var(--spacing-lg);
+}
+
+.stat-card {
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    padding: var(--spacing);
+    text-align: center;
+    color: var(--fg);
+}
+
+.stat-value {
+    font-size: 1.75rem;
+    font-weight: 600;
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    color: var(--muted);
+}
+
+.table-wrapper {
+    width: 50%;
+    border-collapse: collapse;
+    font-family: var(--font-main);
+    color: var(--fg);
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    overflow: hidden;
+}
+
+.survey-table thead {
+    background: var(--border);
+}
+
+.survey-table th {
+    padding: var(--spacing-sm) var(--spacing);
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.9rem;
+    line-height: var(--line-height);
+}
+
+.survey-table tbody tr:nth-child(odd) {
+    background: var(--bg);
+}
+
+.survey-table tbody tr:hover {
+    background: var(--border);
+}
+
+.survey-table td:last-child,
+.survey-table th:last-child {
+    text-align: right;
+}

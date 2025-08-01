@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import useVisitorCookie from "@/hooks/useVisitorCookie.jsx";
+import useVisitorCookie from "@/hooks/useVisitorCookie.js";
 import DisplaySurvey from "../DisplaySurvey/DisplaySurvey.jsx";
 import "./Home.css";
 
