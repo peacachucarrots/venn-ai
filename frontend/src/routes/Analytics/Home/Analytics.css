@@ -24,7 +24,6 @@
 }
 
 .table-wrapper {
-    width: 50%;
     border-collapse: collapse;
     font-family: var(--font-main);
     color: var(--fg);

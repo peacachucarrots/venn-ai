@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import useApi from "@/hooks/useApi.js";
 import { LoadingWithText } from "@/components/Loading/Loading.jsx";
-import useSurveyResponses from "@/hooks/useSurveyResponses.js";
 import "./Analytics.css";
 
 export default function Analytics() {
@@ -39,6 +39,9 @@ export default function Analytics() {
                     </tbody>
                 </table>
             </div>
+
+            <h2>View all responses for a survey</h2>
+            <Link to="/analytics/responses">View All Responses</Link>
         </div>
     );
 }

@@ -1,0 +1,40 @@
+.resp-page select {
+    margin-left: var(--spacing-sm);
+    padding: var(--spacing-sm);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--bg);
+    color: var(--fg);
+}
+
+.resp-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: var(--spacing);
+    font-family: var(--font-main);
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    overflow: hidden;
+}
+
+.resp-table th,
+.resp-table td {
+    padding: var(--spacing-sm);
+    font-size: 0.9rem;
+    border-top: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+}
+
+.resp-table thead {
+    background: var(--border);
+}
+
+.resp-table th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+.table-wrapper {
+    overflow-x: auto;
+}
