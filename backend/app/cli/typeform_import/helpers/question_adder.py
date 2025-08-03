@@ -11,7 +11,8 @@ def add_multiple_choice(field, version_id, order_no) -> int:
         survey_version_id=version_id,
         prompt=field["title"],
         question_type=QuestionType.mcq,
-        order_number=order_no
+        order_number=order_no,
+        typeform_ref=field.get("ref")
     )
     db.session.add(q)
     db.session.flush()
@@ -21,7 +22,11 @@ def add_multiple_choice(field, version_id, order_no) -> int:
         num_val = _num_val(raw) or (idx + 1)
         clean = re.sub(r"^\s*\d+(?:\.\d+)?\s*-\s*", "", raw).strip() if _num_val(raw) else raw
 
-        q.options.append(Option(label=clean, numeric_value=num_val))
+        q.options.append(Option(
+            label=clean,
+            numeric_value=num_val,
+            typeform_ref=field.get("ref")
+        ))
     return 1
 
 def add_matrix(field, version_id, order_no) -> int:
@@ -34,29 +39,32 @@ def add_matrix(field, version_id, order_no) -> int:
     )
 
     rows_added = 0
-    for row in field["properties"]["fields"]:
-        db.session.add(
-            Question(
-                survey_version_id=version_id,
-                prompt=row["title"],
-                question_type=QuestionType.matrix,
-                option_set_id=imp_set.option_set_id,
-                order_number=order_no + rows_added
-            )
+    for idx, row in enumerate(field["properties"]["fields"], start=1):
+        row_ref = row.get("ref") or f"row{idx}"
+        q = Question(
+            survey_version_id=version_id,
+            prompt=row["title"],
+            question_type=QuestionType.matrix,
+            option_set_id=imp_set.option_set_id,
+            order_number=order_no + rows_added,
+            typeform_ref=f"{field.get("ref")}::{row_ref}"
         )
+        db.session.add(q)
         rows_added += 1
     return rows_added
 
 def add_contact(field, version_id, order_no) -> int:
     """Create N contact sub-questions. Return N."""
     rows_added = 0
-    for sub in field["properties"]["fields"]:
+    for idx, sub in enumerate(field["properties"]["fields"], start=1):
+        sub_ref = sub.get("ref") or sub.get("type") or f"sub{idx}"
         db.session.add(
             Question(
                 survey_version_id=version_id,
                 prompt=sub["title"],
                 question_type=QuestionType.contact,
-                order_number=order_no + rows_added
+                order_number=order_no + rows_added,
+                typeform_ref=f"{field.get('ref')}::{sub_ref}"
             )
         )
         rows_added += 1

@@ -1,0 +1,61 @@
+.responses-section {
+    margin-top: var(--spacing-lg);
+    background: var(--card-bg);
+    color: var(--fg);
+    border-radius: var(--radius);
+    padding: var(--spacing-lg);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+}
+
+.responses-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing);
+    margin-bottom: var(--spacing);
+}
+
+.responses-header h2 {
+    margin: 0;
+    font-size: 1.25rem;
+}
+
+.survey-picker select {
+    margin-left: var(--spacing-sm);
+    padding: var(--spacing-sm);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--bg);
+    color: var(--fg);
+}
+
+.table-wrapper {
+    overflow-x: auto;
+}
+
+.resp-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--card-bg);
+}
+
+.resp-table thead {
+    background: var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+.resp-table th,
+.resp-table td {
+    padding: var(--spacing-sm);
+    border-top: 1px solid var(--border);
+    font-size: 0.9rem;
+}
+
+.resp-table tbody tr:hover {
+    background: var(--bg);
+}
+
+.muted {
+    color: var(--muted);
+}

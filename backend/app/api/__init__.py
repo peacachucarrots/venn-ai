@@ -1,4 +1,4 @@
-from .analytics import bp as analytics_bp
+from backend.app.api.analytics.analytics import bp as analytics_bp
 from .auth import bp as auth_bp
 from .responses import bp as responses_bp
 from .surveys import bp as surveys_bp

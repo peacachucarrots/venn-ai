@@ -72,6 +72,7 @@ class Question(db.Model):
                                                 ondelete="CASCADE"),
                                   nullable=False)
     option_set_id     = db.Column(db.UUID, db.ForeignKey("option_sets.option_set_id"))
+    typeform_ref      = db.Column(db.String(128))
     prompt            = db.Column(db.String(), nullable=False)
     question_type     = db.Column(
         db.Enum(QuestionType, name="question_types"),
@@ -104,6 +105,7 @@ class Option(db.Model):
     option_id      = db.Column(db.UUID, primary_key=True, default=uuid.uuid4)
     question_id    = db.Column(db.UUID, db.ForeignKey("questions.question_id"))
     option_set_id  = db.Column(db.UUID, db.ForeignKey("option_sets.option_set_id"))
+    typeform_ref   = db.Column(db.String(128))
     label          = db.Column(db.String())
     numeric_value  = db.Column(db.Numeric(scale=2))
 
