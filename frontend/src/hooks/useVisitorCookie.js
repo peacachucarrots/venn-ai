@@ -2,7 +2,7 @@ import { useEffect } from "react";
 
 export default function useVisitorCookie() {
     useEffect(() => {
-        fetch("/api/visitors", {
+        fetch("/api/visitors/", {
             method: "POST",
             credentials: "include",
         })

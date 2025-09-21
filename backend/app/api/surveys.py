@@ -3,7 +3,7 @@ from ..models.survey import Survey, QuestionType
 
 bp = Blueprint("surveys", __name__, url_prefix="/api/surveys")
 
-WELCOME_SURVEY_NAME = "Quantum Diagnostic"
+WELCOME_SURVEY_NAME = "Quantum Diagnostic - Level 1"
 
 @bp.get("/welcome")
 def get_welcome_survey():
